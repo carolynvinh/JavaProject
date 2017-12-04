@@ -15,36 +15,72 @@ public class PortfolioController {
 
     static Map<String, ArrayList<Stock>> map = new ConcurrentHashMap<>();
 
+    @RequestMapping(method = RequestMethod.GET, value = "/api/v1/portfolios")
+    public Set<String> getPortfolios(){
+        return map.keySet();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value ="/api/v1/portfolios/{portfolioName}")
+    public ArrayList<Stock> fetchPositions(@PathVariable("portfolioName") String portfolioName){
+        return map.get(portfolioName);
+    }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/api/v1/portfolios/{portfolioName}")
-    public Map<String, ArrayList<Stock>> createPortfolio(@PathVariable("portfolioName") String name){
+    public Map<String, ArrayList<Stock>> createPortfolio(@PathVariable("portfolioName") String portfolioName){
         ArrayList<Stock> list = new ArrayList<Stock>();
-        map.put(name, list);
+        map.put(portfolioName, list);
         return map;
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/api/v1/portfolios/{portfolioName}")
-    public Map<String, ArrayList<Stock>> deletePortfolio(@PathVariable("portfolioName") String name){
-        map.remove(name);
+    public Map<String, ArrayList<Stock>> deletePortfolio(@PathVariable("portfolioName") String portfolioName){
+        map.remove(portfolioName);
         return map;
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/api/v1/portfolios/{portfolioName}/{ticker}")
-    public Map<String, ArrayList<Stock>> insertPosition(@PathVariable("portfolioName") String name,
+    public Map<String, ArrayList<Stock>> insertPosition(@PathVariable("portfolioName") String portfolioName,
                                                    @PathVariable("ticker") String ticker,
                                                    @RequestParam(value="marketValue", required=true) double marketValue){
 
         Stock stock = new Stock(ticker, marketValue);
-        map.get(name).add(stock);
+        map.get(portfolioName).add(stock);
 
         return map;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/api/v1/portfolios")
-    public Map<String, ArrayList<Stock>> getPortfolios(){
+    @RequestMapping(method = RequestMethod.POST, value = "/api/v1/portfolios/{portfolioName}/{ticker}")
+    public Map<String, ArrayList<Stock>> updatePosition(@PathVariable("portfolioName") String portfolioName,
+                                                        @PathVariable("ticker") String ticker,
+                                                        @RequestParam(value="marketValue", required=true) double marketValue){
+
+        ArrayList portfolio = map.get(portfolioName);
+
+        for(int i = 0; i < portfolio.size(); i++){
+            Stock position = (Stock) portfolio.get(i);
+            if((position.getName()).equals(ticker)){
+                position.setValue(marketValue);
+            }
+        }
+
         return map;
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, path = "/api/v1/portfolios/{portfolioName}/{ticker}")
+    public Map<String, ArrayList<Stock>> deletePosition(@PathVariable("portfolioName") String portfolioName,
+                                                        @PathVariable("ticker") String ticker){
+
+        ArrayList portfolio = map.get(portfolioName);
+
+
+        for(int i = 0; i < portfolio.size(); i++){
+            Stock position = (Stock) portfolio.get(i);
+            if((position.getName()).equals(ticker)){
+                portfolio.remove(position);
+            }
+        }
+        return map;
+    }
 
 }
 

@@ -13,4 +13,12 @@ public class Stock{
     public String getName(){
         return this.name;
     }
+
+    public double getValue(){
+        return this.value;
+    }
+
+    public void setValue(double newValue){
+        this.value = newValue;
+    }
 }
