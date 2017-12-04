@@ -51,7 +51,7 @@ public class PortfolioController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/api/v1/portfolios/{portfolioName}/{ticker}")
     public Map<String, ArrayList<Stock>> insertPosition(@PathVariable("portfolioName") String portfolioName,
-                                                   @PathVariable("ticker") String ticker,
+                                                        @PathVariable("ticker") String ticker,
                                                         @RequestParam(value="marketValue", required=true) double marketValue) throws Exception {
         if(map.containsKey(portfolioName)){
             Stock stock = new Stock(ticker, marketValue);
