@@ -2,6 +2,12 @@
 
 Small Java Backend project. Users can visit routes to create and delete portfolios. Then they can add and delete positions from those created portfolios as well. To utilize the app, please visit the routes below. The app will return the data in JSON format for the users viewing. 
 
+## Starting the project 
+
+* Git clone the project 
+* Run 'mvn install' 
+* Run 'mvn spring-boot:run'
+
 ## Portfolio(s)
 * /GET /api/v1/portfolios lists all portfolios on the system by name
 * /PUT /api/v1/portfolios/{portfolioName} creates a new portfolio
