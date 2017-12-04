@@ -1,6 +1,6 @@
 # JavaProject
 
-Small Java Backend project. Users can visit routes to create and delete portfolios. Then they can add and delete positions from those created portfolios as well. To utilize the app, please visit the routes below. 
+Small Java Backend project. Users can visit routes to create and delete portfolios. Then they can add and delete positions from those created portfolios as well. To utilize the app, please visit the routes below. The app will return the data in JSON format for the users viewing. 
 
 ## Portfolio(s)
 * /GET /api/v1/portfolios lists all portfolios on the system by name
