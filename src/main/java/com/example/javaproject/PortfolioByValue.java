@@ -9,12 +9,4 @@ public class PortfolioByValue {
         this.name = name;
         this.marketValue = marketValue;
     }
-
-    public String getName(){
-        return this.name;
-    }
-
-    public double getMarketValue(){
-        return this.marketValue;
-    }
 }

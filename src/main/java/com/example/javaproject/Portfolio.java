@@ -4,18 +4,14 @@ import java.util.*;
 public class Portfolio {
 
     private String name;
-    private ArrayList<Stock> stocks;
+    private List<Stock> stocks;
 
     public Portfolio(String name){
         this.name = name;
-        this.stocks = new ArrayList<Stock>();;
+        this.stocks = new ArrayList<>();;
     }
 
-    public String getName(){
-        return this.name;
-    }
-
-    public ArrayList<Stock> getPositions(){
+    public List<Stock> getPositions(){
         return this.stocks;
     }
 

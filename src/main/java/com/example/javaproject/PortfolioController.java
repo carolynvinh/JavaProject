@@ -18,7 +18,7 @@ public class PortfolioController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value ="/api/v1/portfolios/{portfolioName}")
-    public ArrayList<Stock> fetchPositions(@PathVariable("portfolioName") String portfolioName) throws Exception {
+    public List<Stock> fetchPositions(@PathVariable("portfolioName") String portfolioName) throws Exception {
         if(map.containsKey(portfolioName)){
             return map.get(portfolioName).getPositions();
         } else {
@@ -27,8 +27,8 @@ public class PortfolioController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/api/v1/portfolios/net-asset-value")
-    public ArrayList<PortfolioByValue> netAssetValue(){
-        ArrayList<PortfolioByValue> portfolioList = new ArrayList<PortfolioByValue>();
+    public List<PortfolioByValue> netAssetValue(){
+        List<PortfolioByValue> portfolioList = new ArrayList<>();
         map.forEach((k, v) -> {
             int sum = v.getPositions().stream().mapToInt(stock -> (int) stock.getValue()).sum();
             PortfolioByValue portfolioAndValue = new PortfolioByValue(k, sum);
@@ -50,7 +50,7 @@ public class PortfolioController {
     @RequestMapping(method = RequestMethod.PUT, value = "/api/v1/portfolios/{portfolioName}/{ticker}")
     public void insertPosition(@PathVariable("portfolioName") String portfolioName,
                                @PathVariable("ticker") String ticker,
-                               @RequestParam(value="marketValue", required=true) double marketValue) throws Exception {
+                               @RequestParam(value="marketValue") double marketValue) throws Exception {
         if(map.containsKey(portfolioName)){
             map.get(portfolioName).addPosition(new Stock(ticker, marketValue));
         } else {
@@ -61,7 +61,7 @@ public class PortfolioController {
     @RequestMapping(method = RequestMethod.POST, value = "/api/v1/portfolios/{portfolioName}/{ticker}")
     public void updatePosition(@PathVariable("portfolioName") String portfolioName,
                                @PathVariable("ticker") String ticker,
-                               @RequestParam(value="marketValue", required=true) double marketValue) throws Exception {
+                               @RequestParam(value="marketValue") double marketValue) throws Exception {
         if(map.containsKey(portfolioName) && map.get(portfolioName).findPosition(ticker) != null){
             map.get(portfolioName).findPosition(ticker).setValue(marketValue);
         } else {
