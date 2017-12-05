@@ -1,20 +1,41 @@
 package com.example.javaproject;
+import java.util.*;
 
 public class Portfolio {
 
     private String name;
-    private double netAssetValue;
+    private ArrayList<Stock> stocks;
 
-    public Portfolio(String name, double netAssetValue){
+    public Portfolio(String name){
         this.name = name;
-        this.netAssetValue = netAssetValue;
+        this.stocks = new ArrayList<Stock>();;
     }
 
     public String getName(){
         return this.name;
     }
 
-    public double getNetAssetValue(){
-        return this.netAssetValue;
+    public ArrayList<Stock> getPositions(){
+        return this.stocks;
     }
+
+    public void addPosition(Stock stock){
+        this.stocks.add(stock);
+    }
+
+    public Stock findPosition(String ticker){
+        Stock x = null;
+        for (Stock stock : this.stocks) {
+            if ((stock.getName()).equals(ticker)) {
+                x = stock;
+            }
+        }
+        return x;
+    }
+
+    public void deletePosition(Stock stock){
+        this.stocks.remove(stock);
+    }
+
 }
+
