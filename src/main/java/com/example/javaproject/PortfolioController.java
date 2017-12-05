@@ -49,8 +49,8 @@ public class PortfolioController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/api/v1/portfolios/{portfolioName}/{ticker}")
     public void insertPosition(@PathVariable("portfolioName") String portfolioName,
-                                                        @PathVariable("ticker") String ticker,
-                                                        @RequestParam(value="marketValue", required=true) double marketValue) throws Exception {
+                               @PathVariable("ticker") String ticker,
+                               @RequestParam(value="marketValue", required=true) double marketValue) throws Exception {
         if(map.containsKey(portfolioName)){
             map.get(portfolioName).addPosition(new Stock(ticker, marketValue));
         } else {
@@ -60,8 +60,8 @@ public class PortfolioController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/v1/portfolios/{portfolioName}/{ticker}")
     public void updatePosition(@PathVariable("portfolioName") String portfolioName,
-                                                        @PathVariable("ticker") String ticker,
-                                                        @RequestParam(value="marketValue", required=true) double marketValue) throws Exception {
+                               @PathVariable("ticker") String ticker,
+                               @RequestParam(value="marketValue", required=true) double marketValue) throws Exception {
         if(map.containsKey(portfolioName) && map.get(portfolioName).findPosition(ticker) != null){
             map.get(portfolioName).findPosition(ticker).setValue(marketValue);
         } else {
@@ -80,7 +80,7 @@ public class PortfolioController {
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/api/v1/portfolios/{portfolioName}/{ticker}")
     public void deletePosition(@PathVariable("portfolioName") String portfolioName,
-                                                        @PathVariable("ticker") String ticker) throws Exception {
+                               @PathVariable("ticker") String ticker) throws Exception {
         if(map.containsKey(portfolioName) && map.get(portfolioName).findPosition(ticker) != null){
             Stock stock = map.get(portfolioName).findPosition(ticker);
             map.get(portfolioName).deletePosition(stock);
